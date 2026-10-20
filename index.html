@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>GAIUS Networks</title>
 <meta name="claude:viewport-fit-sides" content="cover">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20128%20128%22%3E%3Crect%20width%3D%22128%22%20height%3D%22128%22%20rx%3D%2228%22%20fill%3D%22%23070B1A%22/%3E%3Cg%20transform%3D%22translate%2814%2014%29%20scale%28.78%29%22%3E%3Cpath%20d%3D%22M100.77%2027.23%20A52%2052%200%201%200%20116%2064%22%20fill%3D%22none%22%20stroke%3D%22%234FD1E8%22%20stroke-width%3D%2211%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M90.87%2037.13%20A38%2038%200%201%200%20102%2064%22%20fill%3D%22none%22%20stroke%3D%22%23FF6B8B%22%20stroke-width%3D%2211%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M80.97%2047.03%20A24%2024%200%201%200%2088%2064%22%20fill%3D%22none%22%20stroke%3D%22%23FFB547%22%20stroke-width%3D%2211%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M116%2064%20H64%22%20fill%3D%22none%22%20stroke%3D%22%23EEF1FA%22%20stroke-width%3D%2211%22%20stroke-linecap%3D%22round%22/%3E%3Ccircle%20cx%3D%2264%22%20cy%3D%2264%22%20r%3D%227.5%22%20fill%3D%22%23EEF1FA%22/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
@@ -37,7 +38,12 @@ a{color:inherit}
 .nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(7,11,26,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .nav .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:16px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;letter-spacing:.06em;font-size:1.05rem;text-decoration:none}
-.brand i{width:22px;height:22px;border-radius:50%;background:conic-gradient(from 200deg,var(--cyan),var(--coral),var(--amber),var(--cyan));box-shadow:0 0 18px rgba(255,181,71,.5)}
+.brand{gap:12px}
+.brand svg{flex:none;filter:drop-shadow(0 0 10px rgba(255,181,71,.25))}
+.bw{display:flex;flex-direction:column;line-height:1}
+.bw b{font-family:var(--display);font-weight:800;font-size:1.3rem;letter-spacing:.03em}
+.bw small{font-family:var(--mono);font-weight:500;font-size:.56rem;letter-spacing:.55em;color:var(--muted);margin-top:4px}
+.flogo{display:flex;align-items:center;gap:10px;color:var(--muted)}
 .nav ul{display:flex;gap:24px;list-style:none;margin:0;padding:0;flex-wrap:wrap}
 .nav ul a{color:var(--muted);text-decoration:none;font-size:.9rem}
 .nav ul a:hover{color:var(--ink)}
@@ -192,7 +198,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <body>
 <header class="nav">
   <div class="wrap">
-    <a class="brand" href="#top"><i></i>GAIUS NETWORKS</a>
+    <a class="brand" href="#top" aria-label="GAIUS Networks home"><svg width="34" height="34" viewBox="0 0 128 128" aria-hidden="true"><path d="M100.77 27.23 A52 52 0 1 0 116 64" fill="none" stroke="#4FD1E8" stroke-width="10" stroke-linecap="round"/><path d="M90.87 37.13 A38 38 0 1 0 102 64" fill="none" stroke="#FF6B8B" stroke-width="10" stroke-linecap="round"/><path d="M80.97 47.03 A24 24 0 1 0 88 64" fill="none" stroke="#FFB547" stroke-width="10" stroke-linecap="round"/><path d="M116 64 H64" fill="none" stroke="#EEF1FA" stroke-width="10" stroke-linecap="round"/><circle cx="64" cy="64" r="7.5" fill="#EEF1FA"/></svg><span class="bw"><b>GAIUS</b><small>NETWORKS</small></span></a>
     <ul>
       <li><a href="#thesis">Thesis</a></li>
       <li><a href="#platforms">Platforms</a></li>
@@ -205,8 +211,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   <canvas id="net" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="pill"><b>NYU SPINOUT</b> GAIUS Networks Inc.</div>
-    <h1>We build technology that matches people to <span class="grad">opportunity</span>.</h1>
-    <p class="lede">Matching engines for three markets: local attention, creator communities and work. Each one connects people with the businesses that want to reach, partner with or hire them. Flipped AI, our talent platform, leads the group.</p>
+    <h1>We build technology that connects people to <span class="grad">opportunity</span>.</h1>
+    <p class="lede">Platforms for three markets: local attention, creator communities and work. Each one connects people with the businesses that want to reach, partner with or hire them. Flipped AI, our talent platform, leads the group.</p>
     <div class="ctas">
       <a class="btn primary" href="#platforms">Explore the platforms →</a>
       <a class="btn ghost" href="#contact">Get in touch</a>
@@ -226,7 +232,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <div class="head" style="margin-bottom:0">
         <div class="label">The thesis</div>
         <h2>One capability.<br><span class="grad">Three markets.</span></h2>
-        <p>Every platform we have built solves the same problem: understanding people well enough to match them with the right opportunity, and building the rails to transact on that match. We started with local attention, moved to communities, and are now applying it to work, the largest and most valuable of the three.</p>
+        <p>Every platform we have built solves the same problem: understanding people well enough to connect them with the right opportunity, and building the rails to transact on that connection. We started with local attention, moved to communities, and are now applying it to work, the largest and most valuable of the three.</p>
       </div>
       <div class="stats">
         <div><b class="grad">5M+</b><span>students trained through Flipped AI programmes</span></div>
@@ -333,7 +339,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   <div class="wrap">
     <div class="head">
       <div class="label">Why now</div>
-      <h2>Matching is becoming <span class="grad">agentic</span>.</h2>
+      <h2>Connection is the next <span class="grad">platform shift</span>.</h2>
     </div>
     <div class="why">
       <div><h3>AI agents can do the work</h3><p>Sourcing, screening and scheduling are now automatable end to end. Platforms that own the candidate relationship capture that value.</p></div>
@@ -356,7 +362,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 <footer>
   <div class="wrap">
-    <span>© 2026 GAIUS Networks Inc.</span>
+    <span class="flogo"><svg width="22" height="22" viewBox="0 0 128 128" aria-hidden="true"><path d="M100.77 27.23 A52 52 0 1 0 116 64" fill="none" stroke="#4FD1E8" stroke-width="11" stroke-linecap="round"/><path d="M90.87 37.13 A38 38 0 1 0 102 64" fill="none" stroke="#FF6B8B" stroke-width="11" stroke-linecap="round"/><path d="M80.97 47.03 A24 24 0 1 0 88 64" fill="none" stroke="#FFB547" stroke-width="11" stroke-linecap="round"/><path d="M116 64 H64" fill="none" stroke="#EEF1FA" stroke-width="11" stroke-linecap="round"/><circle cx="64" cy="64" r="7.5" fill="#EEF1FA"/></svg>© 2026 GAIUS Networks Inc.</span>
     <span>Flipped AI · Bublr · GAIUS Exchange</span>
   </div>
 </footer>
