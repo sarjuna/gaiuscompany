@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GAIUS Networks</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: committed night-sky look. Full-bleed animated matching network in the hero, 3D stacked plates for the thesis, one colour per platform (amber = work, coral = community, cyan = attention) */
+:root{
+  --bg:#070B1A; --bg2:#0B1126; --surface:#10183A; --line:rgba(170,185,255,.12); --line2:rgba(170,185,255,.22);
+  --ink:#EEF1FA; --muted:#9AA4C6; --dim:#6B76A0;
+  --amber:#FFB547; --coral:#FF6B8B; --cyan:#4FD1E8; --violet:#8C7BFF;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.02}
+h2{font-size:clamp(2rem,4.6vw,3.6rem);font-weight:800;letter-spacing:-.025em}
+h3{font-weight:600}
+p{margin:0;max-width:62ch}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px}
+.label{font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.label::before{content:"";display:inline-block;width:18px;height:1px;background:currentColor;vertical-align:middle;margin-right:10px;opacity:.7}
+.grad{background:linear-gradient(100deg,var(--amber) 10%,var(--coral) 60%,var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(7,11,26,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;letter-spacing:.06em;font-size:1.05rem;text-decoration:none}
+.brand i{width:22px;height:22px;border-radius:50%;background:conic-gradient(from 200deg,var(--cyan),var(--coral),var(--amber),var(--cyan));box-shadow:0 0 18px rgba(255,181,71,.5)}
+.nav ul{display:flex;gap:24px;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+.nav ul a{color:var(--muted);text-decoration:none;font-size:.9rem}
+.nav ul a:hover{color:var(--ink)}
+@media (max-width:640px){.nav ul{display:none}}
+
+/* hero */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:
+  radial-gradient(60% 70% at 15% 50%,rgba(7,11,26,.92),rgba(7,11,26,.4) 60%,transparent),
+  linear-gradient(180deg,transparent 70%,var(--bg))}
+.hero .wrap{position:relative;z-index:2;padding-block:120px 110px}
+.hero h1{font-size:clamp(2.7rem,7.2vw,6rem);font-weight:800;letter-spacing:-.035em;max-width:13ch}
+.hero .lede{font-size:clamp(1.05rem,1.6vw,1.25rem);color:var(--muted);margin-top:28px;max-width:52ch}
+.pill{display:inline-flex;align-items:center;gap:10px;padding:7px 14px 7px 8px;border:1px solid var(--line2);border-radius:999px;font-size:.82rem;color:var(--muted);background:rgba(16,24,58,.6);margin-bottom:28px}
+.pill b{font-family:var(--mono);font-weight:500;font-size:.7rem;letter-spacing:.1em;background:var(--amber);color:var(--bg);padding:3px 8px;border-radius:999px}
+.ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:40px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border-radius:999px;font-weight:600;text-decoration:none;font-size:.95rem;transition:transform .2s,box-shadow .2s}
+.btn.primary{background:linear-gradient(100deg,var(--amber),var(--coral));color:#1A0E00;box-shadow:0 10px 40px -10px rgba(255,140,90,.7)}
+.btn.primary:hover{transform:translateY(-2px);box-shadow:0 16px 50px -10px rgba(255,140,90,.9)}
+.btn.ghost{border:1px solid var(--line2);color:var(--ink)}
+.btn.ghost:hover{background:rgba(255,255,255,.05)}
+.legend{display:flex;gap:22px;flex-wrap:wrap;margin-top:56px;font-family:var(--mono);font-size:.75rem;color:var(--dim);letter-spacing:.08em}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{width:9px;height:9px;border-radius:50%}
+
+section{padding-block:120px;position:relative}
+.head{display:grid;gap:18px;margin-bottom:56px}
+.head p{color:var(--muted);font-size:1.12rem}
+
+/* thesis: 3D plates */
+.thesis{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.thesis > *{min-width:0}
+.plates{position:relative;height:440px;perspective:1400px}
+.plates .scene{position:absolute;left:50%;top:50%;width:300px;height:300px;margin:-150px 0 0 -150px;transform-style:preserve-3d;transform:rotateX(58deg) rotateZ(-38deg)}
+.plate{position:absolute;inset:0;border-radius:28px;border:1px solid;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.plate::after{content:"";position:absolute;inset:18%;border-radius:50%;border:1px dashed currentColor;opacity:.45}
+.plate.p1{color:var(--cyan);border-color:rgba(79,209,232,.6);background:linear-gradient(135deg,rgba(79,209,232,.22),rgba(79,209,232,.04));transform:translateZ(0)}
+.plate.p2{color:var(--coral);border-color:rgba(255,107,139,.6);background:linear-gradient(135deg,rgba(255,107,139,.24),rgba(255,107,139,.04));transform:translateZ(80px)}
+.plate.p3{color:var(--amber);border-color:rgba(255,181,71,.8);background:linear-gradient(135deg,rgba(255,181,71,.32),rgba(255,181,71,.06));transform:translateZ(160px);box-shadow:0 0 80px rgba(255,181,71,.35)}
+.plates:hover .p2{transform:translateZ(110px)}
+.plates:hover .p3{transform:translateZ(220px)}
+.plate-tags{position:absolute;right:0;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-between;padding-block:42px 70px;font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;text-align:right}
+.plate-tags b{display:block;font-family:var(--display);font-size:1.15rem;letter-spacing:0;color:var(--ink);font-weight:600}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:20px;overflow:hidden;margin-top:44px}
+.stats div{background:var(--bg2);padding:26px 24px}
+.stats b{display:block;font-family:var(--display);font-size:clamp(2.2rem,4vw,3rem);font-weight:800;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.stats span{display:block;margin-top:10px;color:var(--muted);font-size:.9rem}
+
+/* platforms */
+.platforms{display:grid;gap:28px}
+.pf{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:0;border:1px solid var(--line);border-radius:28px;overflow:hidden;background:var(--bg2)}
+.pf > *{min-width:0}
+.pf .txt{padding:48px 44px;display:grid;gap:20px;align-content:start;position:relative;z-index:1}
+.pf .vis{position:relative;min-height:340px;border-left:1px solid var(--line);overflow:hidden}
+.pf h3{font-size:clamp(2.4rem,4.4vw,3.4rem);font-weight:800;letter-spacing:-.03em}
+.pf p{color:var(--muted)}
+.chip{display:inline-flex;align-self:start;justify-self:start;font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;padding:6px 12px;border-radius:999px;border:1px solid}
+.mods{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+.mods div{padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid var(--line)}
+.mods b{display:block;font-size:.93rem;font-weight:600}
+.mods span{font-size:.84rem;color:var(--muted)}
+.pf.work{--c:var(--amber)}
+.pf.comm{--c:var(--coral)}
+.pf.attn{--c:var(--cyan)}
+.pf .chip{color:var(--c);border-color:var(--c)}
+.pf h3 em{font-style:normal;color:var(--c)}
+.pf::before{content:"";position:absolute;width:520px;height:520px;right:-120px;top:-160px;border-radius:50%;background:radial-gradient(circle,var(--c),transparent 65%);opacity:.14;pointer-events:none}
+.pf.work{border-color:rgba(255,181,71,.35)}
+
+/* Flipped AI visual: pipeline */
+.pipe{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:12px;padding:32px 36px}
+.step{display:flex;align-items:center;gap:14px;padding:12px 16px;border-radius:14px;background:rgba(16,24,58,.85);border:1px solid var(--line2);font-size:.92rem;position:relative}
+.step i{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-family:var(--mono);font-style:normal;font-size:.75rem;background:rgba(255,181,71,.14);color:var(--amber);flex:none}
+.step small{margin-left:auto;font-family:var(--mono);color:var(--dim);font-size:.7rem;letter-spacing:.08em}
+.step.on{border-color:var(--amber);box-shadow:0 0 0 1px var(--amber),0 0 30px rgba(255,181,71,.3)}
+.step.on small{color:var(--amber)}
+.step:nth-child(2){margin-left:18px}.step:nth-child(3){margin-left:36px}.step:nth-child(4){margin-left:18px}
+
+/* Bublr visual: bubbles */
+.bubbles{position:absolute;inset:0}
+.bub{position:absolute;border-radius:50%;display:grid;place-items:center;text-align:center;font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;color:var(--ink);
+  background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.28),rgba(255,107,139,.22) 40%,rgba(255,107,139,.06) 72%);border:1px solid rgba(255,107,139,.5);box-shadow:inset 0 0 30px rgba(255,107,139,.25)}
+.bub.brand{background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.3),rgba(140,123,255,.25) 40%,rgba(140,123,255,.06) 72%);border-color:rgba(140,123,255,.6)}
+.bubbles svg{position:absolute;inset:0;width:100%;height:100%}
+
+/* Exchange visual: hyperlocal dot map */
+.map{position:absolute;inset:0}
+.map canvas{width:100%;height:100%;display:block}
+
+/* cases */
+.cases{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.case{position:relative;padding:34px 30px;border-radius:24px;background:linear-gradient(180deg,var(--surface),var(--bg2));border:1px solid var(--line);display:grid;gap:16px;align-content:start;overflow:hidden;transition:transform .3s,border-color .3s}
+.case:hover{transform:translateY(-4px);border-color:var(--line2)}
+.case .big{font-family:var(--display);font-size:4.5rem;font-weight:800;line-height:.8;color:transparent;-webkit-text-stroke:1px var(--line2);position:absolute;right:20px;top:24px}
+.case h3{font-size:1.7rem}
+.case ul{margin:0;padding:0;list-style:none;display:grid;gap:12px;color:var(--muted);font-size:.95rem}
+.case li{padding-left:22px;position:relative}
+.case li::before{content:"";position:absolute;left:0;top:.62em;width:10px;height:2px;background:var(--amber)}
+
+/* why now */
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line)}
+.why div{padding:36px 28px 0 0;display:grid;gap:12px;align-content:start}
+.why div + div{padding-left:28px;border-left:1px solid var(--line)}
+.why h3{font-size:1.4rem}
+.why p{color:var(--muted);font-size:.97rem}
+
+/* leadership */
+.lead{display:grid;grid-template-columns:1fr;max-width:760px}
+.lead > *{min-width:0}
+.lead h2{font-size:clamp(2rem,4vw,3rem)}
+.lead .role{color:var(--amber);font-family:var(--mono);font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;margin-top:12px}
+.lead p.bio{color:var(--muted);margin-top:22px;font-size:1.05rem}
+.creds{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.creds span{font-size:.82rem;padding:7px 12px;border-radius:999px;border:1px solid var(--line2);color:var(--ink)}
+.contact{position:relative;padding:44px 40px;border-radius:28px;overflow:hidden;display:grid;gap:18px;align-content:end;
+  background:radial-gradient(120% 90% at 100% 0%,rgba(255,107,139,.45),transparent 60%),radial-gradient(100% 80% at 0% 100%,rgba(255,181,71,.4),transparent 60%),var(--surface);border:1px solid var(--line2)}
+.contact h3{font-size:clamp(1.8rem,3vw,2.4rem);font-weight:800;letter-spacing:-.02em}
+.contact p{color:var(--ink);opacity:.85}
+.contact .who{font-family:var(--mono);font-size:1.05rem;padding-top:16px;border-top:1px solid var(--line2);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.contact .who a{color:var(--ink);text-decoration:none;user-select:all;overflow-wrap:anywhere}
+.copy{font:inherit;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;padding:8px 14px;border-radius:999px;border:1px solid var(--line2);background:rgba(7,11,26,.4);color:var(--ink);cursor:pointer}
+.copy:hover{background:rgba(7,11,26,.7)}
+
+footer{padding-block:36px;border-top:1px solid var(--line);color:var(--dim);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+@media (max-width:920px){
+  .thesis,.lead{grid-template-columns:1fr;gap:48px}
+  .pf{grid-template-columns:1fr}
+  .pf .vis{border-left:0;border-top:1px solid var(--line);min-height:300px}
+  .cases,.why{grid-template-columns:1fr}
+  .why div,.why div + div{padding:28px 0 0;border-left:0}
+  .why div + div{border-top:1px solid var(--line);margin-top:28px}
+}
+@media (max-width:520px){
+  section{padding-block:80px}
+  .hero .wrap{padding-block:80px 72px}
+  .pf .txt{padding:34px 24px}
+  .mods{grid-template-columns:1fr}
+  .plates{height:340px}
+  .plates .scene{transform:rotateX(58deg) rotateZ(-38deg) scale(.75)}
+  .plate-tags{font-size:.65rem}
+  .plate-tags b{font-size:.95rem}
+  .contact{padding:32px 24px}
+  .step:nth-child(n){margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.plate,.btn,.case{transition:none}}
+</style>
+<style>body{margin:0} img{max-width:100%}</style>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top"><i></i>GAIUS NETWORKS</a>
+    <ul>
+      <li><a href="#thesis">Thesis</a></li>
+      <li><a href="#platforms">Platforms</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<div class="hero" id="top">
+  <canvas id="net" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="pill"><b>NYU SPINOUT</b> GAIUS Networks Inc.</div>
+    <h1>We build technology that matches people to <span class="grad">opportunity</span>.</h1>
+    <p class="lede">Matching engines for three markets: local attention, creator communities and work. Each one connects people with the businesses that want to reach, partner with or hire them. Flipped AI, our talent platform, leads the group.</p>
+    <div class="ctas">
+      <a class="btn primary" href="#platforms">Explore the platforms →</a>
+      <a class="btn ghost" href="#contact">Get in touch</a>
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--ink)"></i>PEOPLE</span>
+      <span><i style="background:var(--amber)"></i>WORK · FLIPPED AI</span>
+      <span><i style="background:var(--coral)"></i>COMMUNITY · BUBLR</span>
+      <span><i style="background:var(--cyan)"></i>ATTENTION · EXCHANGE</span>
+    </div>
+  </div>
+</div>
+
+<section id="thesis">
+  <div class="wrap thesis">
+    <div>
+      <div class="head" style="margin-bottom:0">
+        <div class="label">The thesis</div>
+        <h2>One capability.<br><span class="grad">Three markets.</span></h2>
+        <p>Every platform we have built solves the same problem: understanding people well enough to match them with the right opportunity, and building the rails to transact on that match. We started with local attention, moved to communities, and are now applying it to work, the largest and most valuable of the three.</p>
+      </div>
+      <div class="stats">
+        <div><b class="grad">5M+</b><span>students trained through Flipped AI programmes</span></div>
+        <div><b class="grad">1,000+</b><span>enterprises working with Flipped AI</span></div>
+        <div><b class="grad">1M+</b><span>candidates in a proprietary talent pool</span></div>
+        <div><b class="grad">3</b><span>platforms built and shipped by one team</span></div>
+      </div>
+    </div>
+    <div class="plates" aria-label="Three stacked layers: attention at the base, community in the middle, work on top">
+      <div class="scene">
+        <div class="plate p1"></div>
+        <div class="plate p2"></div>
+        <div class="plate p3"></div>
+      </div>
+      <div class="plate-tags">
+        <div style="color:var(--amber)">LAYER 03 · WORK<b>Flipped AI</b></div>
+        <div style="color:var(--coral)">LAYER 02 · COMMUNITY<b>Bublr</b></div>
+        <div style="color:var(--cyan)">LAYER 01 · ATTENTION<b>GAIUS Exchange</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="platforms" style="padding-top:40px">
+  <div class="wrap">
+    <div class="head">
+      <div class="label">The platforms</div>
+      <h2>A flagship and two strategic assets.</h2>
+    </div>
+    <div class="platforms">
+
+      <article class="pf work">
+        <div class="txt">
+          <span class="chip">Flagship · Layer 03 · Work</span>
+          <h3>Flipped AI<em>.</em></h3>
+          <p>An agentic AI platform for talent acquisition. Flipped AI automates hiring end to end for recruiters, and pairs it with the assessment and upskilling that make a candidate pool more valuable over time.</p>
+          <div class="mods">
+            <div><b>Recruitment agents</b><span>Sourcing, screening and scheduling, automated.</span></div>
+            <div><b>Assessments</b><span>Skills testing that verifies ability.</span></div>
+            <div><b>Upskilling</b><span>A proprietary frontier-tech course library.</span></div>
+            <div><b>Hiring chatbot</b><span>Conversational candidate rediscovery.</span></div>
+          </div>
+        </div>
+        <div class="vis">
+          <div class="pipe" id="pipe">
+            <div class="step"><i>01</i>Source candidates<small>AGENT</small></div>
+            <div class="step"><i>02</i>Assess skills<small>VERIFIED</small></div>
+            <div class="step"><i>03</i>Upskill the gaps<small>COURSES</small></div>
+            <div class="step"><i>04</i>Match &amp; schedule<small>AGENT</small></div>
+            <div class="step"><i>05</i>Hire<small>EMPLOYER</small></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="pf comm">
+        <div class="txt">
+          <span class="chip">Strategic asset · Layer 02 · Community</span>
+          <h3>Bublr<em>.</em></h3>
+          <p>Creators build their own communities, called bubbles, keep full control of them, and choose how to monetise them. Brands get a direct, consented way to reach those communities and the creators who run them.</p>
+          <div class="mods">
+            <div><b>Creator-owned</b><span>Creators control members, content and data.</span></div>
+            <div><b>Monetisation</b><span>Built-in ways to earn from a community.</span></div>
+            <div><b>Brand access</b><span>Brands reach communities through creators.</span></div>
+            <div><b>Many bubbles</b><span>One creator can run several communities.</span></div>
+          </div>
+        </div>
+        <div class="vis">
+          <div class="bubbles">
+            <svg viewBox="0 0 400 340" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <g stroke="rgba(255,107,139,.45)" stroke-dasharray="3 5" fill="none">
+                <path d="M120 120 C 200 90, 230 120, 290 170"/>
+                <path d="M110 240 C 180 250, 230 220, 290 170"/>
+                <path d="M210 70 C 250 100, 270 130, 290 170"/>
+              </g>
+            </svg>
+            <div class="bub" style="width:130px;height:130px;left:12%;top:16%">CREATOR<br>BUBBLE</div>
+            <div class="bub" style="width:96px;height:96px;left:16%;top:58%">CREATOR<br>BUBBLE</div>
+            <div class="bub" style="width:70px;height:70px;left:44%;top:8%">BUBBLE</div>
+            <div class="bub brand" style="width:118px;height:118px;left:62%;top:36%">BRAND</div>
+            <div class="bub" style="width:40px;height:40px;left:48%;top:72%"></div>
+            <div class="bub" style="width:26px;height:26px;left:84%;top:16%"></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="pf attn">
+        <div class="txt">
+          <span class="chip">Strategic asset · Layer 01 · Attention</span>
+          <h3>GAIUS Exchange<em>.</em></h3>
+          <p>Our first platform: a hyperlocal mobile web paired with a decentralised content and ad exchange. It brings relevant local content to people and lets advertisers reach them without relying on the large ad networks.</p>
+          <div class="mods">
+            <div><b>Hyperlocal web</b><span>Mobile content tuned to place.</span></div>
+            <div><b>Decentralised exchange</b><span>Content and ad matching without a central broker.</span></div>
+          </div>
+        </div>
+        <div class="vis"><div class="map"><canvas id="map" aria-hidden="true"></canvas></div></div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:20px">
+  <div class="wrap">
+    <div class="head">
+      <div class="label">Why now</div>
+      <h2>Matching is becoming <span class="grad">agentic</span>.</h2>
+    </div>
+    <div class="why">
+      <div><h3>AI agents can do the work</h3><p>Sourcing, screening and scheduling are now automatable end to end. Platforms that own the candidate relationship capture that value.</p></div>
+      <div><h3>Skills beat credentials</h3><p>Employers want proof of ability. Assessment and upskilling turn a talent pool into a verified one.</p></div>
+      <div><h3>Owned audiences win</h3><p>As third-party ad targeting weakens, brands need consented access to communities and local audiences.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap lead">
+    <div class="contact">
+      <div class="label" style="color:var(--ink)">Contact</div>
+      <h3>Get in touch.</h3>
+      <p>For product demos, partnerships or anything else, email our team.</p>
+      <div class="who"><a href="mailto:support@flipped.ai" id="mail">support@flipped.ai</a><button type="button" id="copy" class="copy">Copy</button></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 GAIUS Networks Inc.</span>
+    <span>Flipped AI · Bublr · GAIUS Exchange</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var COLORS = ['#FFB547','#FF6B8B','#4FD1E8'];
+
+  /* Hero: people (left/scattered) matched to opportunity hubs (right) */
+  var cv = document.getElementById('net'), ctx = cv.getContext('2d');
+  var W,H,dpr,people=[],hubs=[],pulses=[];
+  function setup(){
+    dpr = Math.min(window.devicePixelRatio||1,2);
+    W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = W*dpr; cv.height = H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+    var wide = W>760, x0 = wide ? W*0.42 : 0;
+    hubs = [];
+    for (var i=0;i<9;i++){
+      var c = i%3;
+      hubs.push({x: x0 + (W-x0)*(0.55+0.4*Math.random()), y: H*(0.12+0.76*(i/8)) + (Math.random()-.5)*30, c:c, r: 5+Math.random()*4, ph:Math.random()*6});
+    }
+    people = [];
+    var n = Math.round(Math.min(140, W*H/9000));
+    for (var j=0;j<n;j++){
+      people.push({x: x0 + (W-x0)*Math.random()*0.62, y: H*Math.random(), vx:(Math.random()-.5)*.15, vy:(Math.random()-.5)*.15, h: Math.floor(Math.random()*hubs.length)});
+    }
+    pulses = [];
+  }
+  function spawn(){
+    var p = people[Math.floor(Math.random()*people.length)];
+    var h = hubs[p.h];
+    pulses.push({p:p,h:h,t:0,s:0.006+Math.random()*0.008});
+  }
+  function curve(p,h,t){
+    var mx=(p.x+h.x)/2, my=Math.min(p.y,h.y)-40;
+    var a=1-t; return {x:a*a*p.x+2*a*t*mx+t*t*h.x, y:a*a*p.y+2*a*t*my+t*t*h.y};
+  }
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    // faint links
+    for (var i=0;i<people.length;i++){
+      var p=people[i], h=hubs[p.h];
+      if(!reduce){p.x+=p.vx;p.y+=p.vy; if(p.y<0||p.y>H)p.vy*=-1; if(p.x<0||p.x>W)p.vx*=-1;}
+      ctx.strokeStyle = 'rgba(154,164,198,0.05)'; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(p.x,p.y);
+      var mx=(p.x+h.x)/2, my=Math.min(p.y,h.y)-40;
+      ctx.quadraticCurveTo(mx,my,h.x,h.y); ctx.stroke();
+    }
+    // people
+    ctx.fillStyle='rgba(238,241,250,0.7)';
+    for (i=0;i<people.length;i++){ctx.beginPath();ctx.arc(people[i].x,people[i].y,1.6,0,6.283);ctx.fill();}
+    // pulses
+    for (i=pulses.length-1;i>=0;i--){
+      var q=pulses[i]; q.t+=q.s;
+      if(q.t>=1){q.h.flash=1; pulses.splice(i,1); continue;}
+      var col=COLORS[q.h.c];
+      for (var k=0;k<8;k++){
+        var tt=Math.max(0,q.t-k*0.012), pt=curve(q.p,q.h,tt);
+        ctx.globalAlpha=(1-k/8)*0.9; ctx.fillStyle=col;
+        ctx.beginPath(); ctx.arc(pt.x,pt.y,2.2-k*0.2,0,6.283); ctx.fill();
+      }
+      ctx.globalAlpha=1;
+    }
+    // hubs
+    var now=performance.now()/1000;
+    for (i=0;i<hubs.length;i++){
+      var hb=hubs[i], col2=COLORS[hb.c];
+      hb.flash=(hb.flash||0)*0.94;
+      var glow=hb.r*4+hb.flash*24+Math.sin(now*1.5+hb.ph)*2;
+      var g=ctx.createRadialGradient(hb.x,hb.y,0,hb.x,hb.y,glow);
+      g.addColorStop(0,col2+'AA'); g.addColorStop(1,col2+'00');
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(hb.x,hb.y,glow,0,6.283); ctx.fill();
+      ctx.fillStyle=col2; ctx.beginPath(); ctx.arc(hb.x,hb.y,hb.r,0,6.283); ctx.fill();
+      ctx.strokeStyle=col2; ctx.globalAlpha=.5; ctx.beginPath(); ctx.arc(hb.x,hb.y,hb.r+7+hb.flash*6,0,6.283); ctx.stroke(); ctx.globalAlpha=1;
+    }
+    if(!reduce){ if(Math.random()<0.35) spawn(); requestAnimationFrame(frame); }
+  }
+  setup();
+  if(reduce){ for(var s=0;s<30;s++){spawn();pulses[s].t=Math.random()*.9;} }
+  frame();
+  var rt; window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){setup(); if(reduce) frame();},150);});
+
+  /* Copy email */
+  var cb=document.getElementById('copy');
+  cb.addEventListener('click',function(){
+    var t='support@flipped.ai';
+    function done(){cb.textContent='Copied';setTimeout(function(){cb.textContent='Copy';},1600);}
+    function sel(){var r=document.createRange();r.selectNodeContents(document.getElementById('mail'));var w=getSelection();w.removeAllRanges();w.addRange(r);}
+    try{navigator.clipboard.writeText(t).then(done,sel);}catch(e){sel();}
+  });
+
+  /* Flipped AI pipeline: highlight steps in sequence */
+  var steps=document.querySelectorAll('#pipe .step'), si=0;
+  steps[0].classList.add('on');
+  if(!reduce) setInterval(function(){steps[si].classList.remove('on'); si=(si+1)%steps.length; steps[si].classList.add('on');},1400);
+
+  /* Exchange: hyperlocal dot map with ripples */
+  var mc=document.getElementById('map'), m=mc.getContext('2d'), MW,MH,dots=[],rip=[];
+  function msetup(){
+    var d=Math.min(window.devicePixelRatio||1,2);
+    MW=mc.clientWidth; MH=mc.clientHeight; mc.width=MW*d; mc.height=MH*d; m.setTransform(d,0,0,d,0,0);
+    dots=[]; var gap=18;
+    for(var y=gap/2;y<MH;y+=gap) for(var x=gap/2;x<MW;x+=gap){
+      var nx=x/MW-.5, ny=y/MH-.5, v=Math.sin(nx*7)+Math.cos(ny*6)+Math.sin((nx+ny)*5);
+      if(v>-.4) dots.push({x:x,y:y,a:0});
+    }
+    rip=[{x:MW*.3,y:MH*.4,t:0},{x:MW*.7,y:MH*.6,t:.5}];
+  }
+  function mframe(){
+    m.clearRect(0,0,MW,MH);
+    for(var r=0;r<rip.length;r++){ if(!reduce){rip[r].t+=.006;} if(rip[r].t>1){rip[r]={x:MW*(.15+.7*Math.random()),y:MH*(.15+.7*Math.random()),t:0};} }
+    for(var i=0;i<dots.length;i++){
+      var dt=dots[i], a=.18;
+      for(r=0;r<rip.length;r++){
+        var R=rip[r].t*Math.max(MW,MH)*.5, dd=Math.hypot(dt.x-rip[r].x,dt.y-rip[r].y);
+        var band=Math.max(0,1-Math.abs(dd-R)/22)*(1-rip[r].t);
+        a=Math.max(a,.18+band*.9);
+      }
+      m.fillStyle='rgba(79,209,232,'+a.toFixed(3)+')';
+      m.beginPath(); m.arc(dt.x,dt.y,1.7+ (a>.4?1:0),0,6.283); m.fill();
+    }
+    for(r=0;r<rip.length;r++){
+      m.fillStyle='#4FD1E8'; m.beginPath(); m.arc(rip[r].x,rip[r].y,4,0,6.283); m.fill();
+    }
+    if(!reduce) requestAnimationFrame(mframe);
+  }
+  msetup(); mframe();
+  window.addEventListener('resize',function(){msetup(); if(reduce) mframe();});
+})();
+</script>
+</body>
+</html>
